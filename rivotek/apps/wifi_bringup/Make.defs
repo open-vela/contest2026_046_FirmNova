@@ -1,0 +1,3 @@
+ifneq ($(CONFIG_RIVOTEK_WIFI_BRINGUP),)
+CONFIGURED_APPS += $(RIVOTEK_APPS_DIR)/wifi_bringup
+endif

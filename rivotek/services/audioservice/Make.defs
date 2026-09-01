@@ -1,0 +1,3 @@
+ifneq ($(CONFIG_AUDIOSERVICE),)
+CONFIGURED_APPS += $(APPDIR)/../contest2026_046_FirmNova/rivotek/services/audioservice
+endif

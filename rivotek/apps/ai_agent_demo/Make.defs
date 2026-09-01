@@ -1,0 +1,4 @@
+ifeq ($(CONFIG_AI_AGENT_DEMO_APP),y)
+CONFIGURED_APPS += $(APPDIR)/../contest2026_046_FirmNova/rivotek/apps/ai_agent_demo
+CLEANDIRS       += $(APPDIR)/../contest2026_046_FirmNova/rivotek/apps/ai_agent_demo
+endif

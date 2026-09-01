@@ -1,0 +1,3 @@
+menuconfig DRIVERS_TP
+	bool "touch panel devices"
+rsource './tlsc6x/Kconfig'

@@ -1,0 +1,94 @@
+#
+# For a description of the syntax of this configuration file,
+# see the file kconfig-language.txt in the NuttX tools repository.
+#
+
+config GT911_IIC_TOUCH
+	bool "GT911 LCD IIC Touchscreen Driver"
+	default n
+	depends on INPUT && DRIVERS_TWI
+	select INPUT_TOUCHSCREEN
+	---help---
+		Enable GT911 LCD IIC touchscreen driver support.
+		This driver provides touchscreen functionality for the GT911
+		LCD module using capacitive touch controller over I2C interface.
+		The driver automatically detects the touch controller type.
+
+if GT911_IIC_TOUCH
+
+config GT911_LCD_WIDTH
+	int "GT911 mapped LCD width"
+	default 1920 if LCD_SUPPORT_STL5_5_30_258_K
+	default 1024
+	---help---
+		Final display width reported to the input subsystem.
+
+config GT911_LCD_HEIGHT
+	int "GT911 mapped LCD height"
+	default 1080 if LCD_SUPPORT_STL5_5_30_258_K
+	default 600
+	---help---
+		Final display height reported to the input subsystem.
+
+config GT911_TOUCH_ROTATION
+	int "GT911 touch rotation angle"
+	default 90 if LCD_SUPPORT_STL5_5_30_258_K
+	default 0
+	range 0 270
+	---help---
+		Clockwise rotation angle applied after raw coordinate calibration.
+		Supported values are 0, 90, 180 and 270.
+
+config GT911_RAW_X_MIN
+	int "GT911 raw X minimum"
+	default 75 if LCD_SUPPORT_STL5_5_30_258_K
+	default 0
+
+config GT911_RAW_X_MAX
+	int "GT911 raw X maximum"
+	default 1052 if LCD_SUPPORT_STL5_5_30_258_K
+	default 1023
+
+config GT911_RAW_Y_MIN
+	int "GT911 raw Y minimum"
+	default 38 if LCD_SUPPORT_STL5_5_30_258_K
+	default 0
+
+config GT911_RAW_Y_MAX
+	int "GT911 raw Y maximum"
+	default 1882 if LCD_SUPPORT_STL5_5_30_258_K
+	default 599
+
+config GT911_SWAP_XY
+	bool "Swap calibrated GT911 X/Y before rotation"
+	default n
+
+config GT911_INVERT_X
+	bool "Invert calibrated GT911 X before rotation"
+	default n
+
+config GT911_INVERT_Y
+	bool "Invert calibrated GT911 Y before rotation"
+	default n
+
+config GT911_MOVE_THRESHOLD
+	int "GT911 move event threshold"
+	default 1
+	---help---
+		Minimum pixel delta used to report TOUCH_MOVE.
+
+config GT911_TOUCH_DEBUG
+	bool "Enable GT911 touch coordinate debug logs"
+	default n
+
+config GT911_TOUCH_DEBUG_MOVE_STEP
+	int "GT911 move debug log step"
+	default 8
+	depends on GT911_TOUCH_DEBUG
+	---help---
+		Print MOVE logs when the accumulated axis delta reaches this value.
+
+endif
+
+source "drivers/platform/micro_sd/Kconfig"
+source "drivers/platform/realtek_ieee80211/Kconfig"

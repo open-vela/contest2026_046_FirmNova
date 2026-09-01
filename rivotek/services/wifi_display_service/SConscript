@@ -1,0 +1,35 @@
+Import('AIC_ROOT')
+from building import *
+import os
+
+cwd = GetCurrentDir()
+inc = [
+    os.path.join(cwd, 'include'),
+    os.path.join(AIC_ROOT, 'packages', 'rivotek', 'services', 'map_service', 'include'),
+    os.path.join(AIC_ROOT, 'packages', 'rivotek', 'include'),
+]
+
+port_root = os.path.join(cwd, 'port')
+if os.path.exists(port_root):
+    inc.append(port_root)
+
+src = [
+    os.path.join('src', 'rvt_discovery_server.c'),
+    os.path.join('src', 'rvt_udp_receiver.c'),
+    os.path.join('src', 'rvt_wifi_display_api.c'),
+]
+
+if GetDepend(['RIVOTEK_WIFI_DISPLAY_PORT_OPENVELA_ALLWINNER_R528']):
+    src.append(os.path.join('src', 'rvt_tcp_client.c'))
+else:
+    src.append(os.path.join('src', 'rvt_tcp_server.c'))
+
+port_rel = os.path.join('port', 'stub')
+port_sub = os.path.join(cwd, port_rel)
+if os.path.exists(port_sub):
+    inc.append(port_sub)
+    src += Glob(os.path.join(port_rel, '*.c'))
+
+group = DefineGroup('wifi-display', src, depend=['RIVOTEK_WIFI_DISPLAY'], CPPPATH=inc)
+
+Return('group')

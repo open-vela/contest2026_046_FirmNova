@@ -1,0 +1,3 @@
+ifneq ($(CONFIG_RIVOTEK_MAP_SERVICE),)
+CONFIGURED_APPS += $(APPDIR)/../contest2026_046_FirmNova/rivotek/services/map_service
+endif

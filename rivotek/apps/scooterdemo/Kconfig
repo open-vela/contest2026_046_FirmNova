@@ -1,0 +1,102 @@
+#
+# Copyright (C) 2024 Xiaomi Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+config EXTERNAL_BLUETOOTH_MODULE
+	bool "Use external bluetooth module on configured UART device"
+	default n
+	---help---
+		Enable this option to use an external bluetooth module via UART
+		device configured by RIVOTEK_PLATFORM_BT_UART_PATH instead of
+		the built-in bluetooth stack path.
+
+menu "Rivotek Platform Abstraction"
+
+config RIVOTEK_PLATFORM_NEED_BOARDINIT
+	bool "Call boardctl(BOARDIOC_INIT) during app startup"
+	default y
+	help
+		If disabled, the app will skip boardctl(BOARDIOC_INIT) and rely on
+		platform pre-initialization.
+
+config RIVOTEK_PLATFORM_FB_PATH
+	string "Framebuffer device path"
+	default "/dev/lcd0"
+	help
+		Framebuffer device path used by LVGL NuttX backend.
+
+config RIVOTEK_PLATFORM_KEY_DEVICE_PRIMARY
+	string "Primary key input device path"
+	default "/dev/buttons"
+	help
+		Primary button/key input device path.
+
+config RIVOTEK_PLATFORM_KEY_DEVICE_FALLBACK
+	string "Fallback key input device path"
+	default "/dev/input/event1"
+	help
+		Fallback button/key input device path when primary is unavailable.
+
+config RIVOTEK_PLATFORM_BT_UART_PATH
+	string "External Bluetooth UART path"
+	default "/dev/uart1"
+	help
+		UART device path used by EXTERNAL_BLUETOOTH_MODULE mode.
+
+endmenu
+
+config SCOOTERDEMO_APP
+	bool "scooter demo application"
+	default n
+	select RIVOTEK_COMPONENT_INPUT
+	select RIVOTEK_COMPONENT_TIME
+	select RIVOTEK_COMPONENT_WEATHER
+	select RIVOTEK_COMPONENT_AUDIO
+	depends on GRAPHICS_LVGL
+	depends on COMPONENTS_BLUETOOTH || EXTERNAL_BLUETOOTH_MODULE
+	depends on COMPONENTS_WEATHER
+	depends on CRYPTO_MBEDTLS
+	depends on LIBC_NETDB
+	depends on MBEDTLS_NET_C
+	depends on NET_TCP
+	depends on NETUTILS_CJSON
+	depends on NETUTILS_NTPCLIENT
+	depends on AUDIOSERVICE || !EXTERNAL_BLUETOOTH_MODULE
+	depends on BT_A2DP || EXTERNAL_BLUETOOTH_MODULE
+
+	---help---
+		Enable scooter demo application.
+
+
+if SCOOTERDEMO_APP
+
+config SCOOTERDEMO_APP_PROGNAME
+	string "Program name"
+	default "scooterdemo"
+	---help---
+		This is the name of the program that will be used when the NSH ELF
+		program is installed.
+
+config SCOOTERDEMO_APP_PRIORITY
+	int "scooterdemo task priority"
+	default 100
+
+config SCOOTERDEMO_APP_STACKSIZE
+	int "scooterdemo stack size"
+	default 204800
+
+endif
+
+ 

@@ -1,0 +1,32 @@
+config RIVOTEK_CONNECTIVITY_SERVICE
+    bool "Rivotek Connectivity Service"
+    depends on NET && WIRELESS_WAPI
+    select NETUTILS_NETLIB
+    select NETUTILS_DHCPC
+    select NETUTILS_CJSON
+    default n
+    help
+        Owns board WiFi STA reconnect. It replaces the legacy start_wifi.sh
+        control flow with a C command that reads /data/etc/wifi/wapi.conf.
+
+config RIVOTEK_DEBUG_PRESET_WAPI_CONF
+    bool "Use debug preset WAPI config and legacy script at boot"
+    default n
+    help
+        Debug option only. When enabled, rcS copies
+        /resource/etc/wifi/wapi_debug.conf to /data/etc/wifi/wapi.conf
+        if no runtime config exists, then forces the legacy
+        /etc/wifi/start_wifi.sh path even when RIVOTEK_CONNECTIVITY_SERVICE is
+        enabled. Keep disabled for production builds.
+
+if RIVOTEK_CONNECTIVITY_SERVICE
+
+config RIVOTEK_CONNECTIVITY_SERVICE_PRIORITY
+    int "connectivity command priority"
+    default 100
+
+config RIVOTEK_CONNECTIVITY_SERVICE_STACKSIZE
+    int "connectivity command stack size"
+    default 8192
+
+endif

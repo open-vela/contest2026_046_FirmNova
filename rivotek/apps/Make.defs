@@ -1,0 +1,12 @@
+############################################################################
+# vendor/allwinnertech/rivotek/apps/Make.defs
+#
+# Register selected Rivotek apps.
+############################################################################
+
+RIVOTEK_APPS_DIR := $(APPDIR)/../contest2026_046_FirmNova/rivotek/apps
+
+include $(wildcard $(RIVOTEK_APPS_DIR)/*/Make.defs)
+
+RIVOTEK_CONFIGURED_APPS := $(filter $(RIVOTEK_APPS_DIR)/%,$(CONFIGURED_APPS))
+CLEANDIRS += $(filter-out $(CLEANDIRS),$(RIVOTEK_CONFIGURED_APPS))

@@ -1,0 +1,3 @@
+ifneq ($(CONFIG_RIVOTEK_CONNECTIVITY_SERVICE),)
+CONFIGURED_APPS += $(APPDIR)/../contest2026_046_FirmNova/rivotek/services/connectivity_service
+endif

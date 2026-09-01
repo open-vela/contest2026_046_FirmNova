@@ -1,0 +1,2 @@
+VPATH += :$(RIVOTEK_SERVICES_DIR)/test
+CSRCS += test.c

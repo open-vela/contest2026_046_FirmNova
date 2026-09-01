@@ -1,0 +1,14 @@
+if(CONFIG_AUDIOSERVICE)
+  nuttx_add_application(
+    NAME
+    ${CONFIG_AUDIOSERVICE_PROGNAME}
+    STACKSIZE
+    ${CONFIG_AUDIOSERVICE_STACKSIZE}
+    PRIORITY
+    ${CONFIG_AUDIOSERVICE_PRIORITY}
+    MODULE
+    ${CONFIG_AUDIOSERVICE}
+    SRCS
+    main.c
+    audio_focus_manager.c)
+endif()

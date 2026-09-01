@@ -1,0 +1,11 @@
+config RIVOTEK_COMPONENT_AUDIO
+	bool
+	default n
+	help
+		Internal symbol for Rivotek audio component.
+		It is selected by apps and should not be toggled directly.
+
+config RIVOTEK_SERVICE_AUDIO
+	bool
+	default n
+	select RIVOTEK_COMPONENT_AUDIO

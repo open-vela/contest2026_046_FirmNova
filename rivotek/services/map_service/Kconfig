@@ -1,0 +1,18 @@
+config RIVOTEK_MAP_SERVICE
+    bool "RivotekMapService"
+    depends on RIVOTEK_WIFI_DISPLAY
+    default y if RIVOTEK_WIFI_DISPLAY
+    help
+        Enable vehicle-side map command API over wifi display TCP channel.
+
+if RIVOTEK_MAP_SERVICE
+
+config RIVOTEK_MAP_SERVICE_PRIORITY
+    int "map service command priority"
+    default 100
+
+config RIVOTEK_MAP_SERVICE_STACKSIZE
+    int "map service command stack size"
+    default DEFAULT_TASK_STACKSIZE
+
+endif

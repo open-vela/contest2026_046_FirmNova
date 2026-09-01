@@ -1,0 +1,11 @@
+config RIVOTEK_COMPONENT_TIME
+	bool
+	default n
+	help
+		Internal symbol for Rivotek time component.
+		It is selected by apps and should not be toggled directly.
+
+config RIVOTEK_SERVICE_TIME
+	bool
+	default n
+	select RIVOTEK_COMPONENT_TIME
