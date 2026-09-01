@@ -1,0 +1,11 @@
+config RIVOTEK_COMPONENT_INPUT
+	bool
+	default n
+	help
+		Internal symbol for Rivotek input component.
+		It is selected by apps and should not be toggled directly.
+
+config RIVOTEK_SERVICE_INPUT
+	bool
+	default n
+	select RIVOTEK_COMPONENT_INPUT

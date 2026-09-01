@@ -1,0 +1,66 @@
+config RIVOTEK_WIFI_DISPLAY
+    bool "RivotekWifiDisplay"
+    depends on NET && NET_TCP && NET_UDP
+    default n
+    help
+        rivotek wifi display fun
+
+if RIVOTEK_WIFI_DISPLAY
+
+config RIVOTEK_WIFI_DISPLAY_PRIORITY
+    int "wifi display command priority"
+    default 100
+
+config RIVOTEK_WIFI_DISPLAY_STACKSIZE
+    int "wifi display command stack size"
+    default DEFAULT_TASK_STACKSIZE
+
+choice RIVOTEK_WIFI_DISPLAY_PORT
+    prompt "Rivotek wifi display platform port"
+    default RIVOTEK_WIFI_DISPLAY_PORT_NONE
+
+config RIVOTEK_WIFI_DISPLAY_PORT_NONE
+    bool "No platform adapter"
+    depends on !ARCH_CHIP_R528
+
+config RIVOTEK_WIFI_DISPLAY_PORT_OPENVELA_ALLWINNER_R528
+    bool "openVela Allwinner R528"
+    depends on ARCH_CHIP_R528 && NETUTILS_NETLIB && WIRELESS_WAPI
+    select NETUTILS_DHCPC
+    select NETUTILS_DHCPD
+
+endchoice
+
+if RIVOTEK_WIFI_DISPLAY_PORT_OPENVELA_ALLWINNER_R528
+
+config RIVOTEK_WIFI_DISPLAY_R528_V4L2_MJPEG
+    bool "Enable R528 V4L2 MJPEG capability probe"
+    depends on DRIVERS_VIDEO && VIDEO_STREAM
+    depends on LIBUAPI
+    default n
+    help
+        Probe a V4L2 M2M decoder device at runtime. If the device reports
+        MJPEG/JPEG input support and NV12/YUV420 output support, advertise
+        JPEG/MJPEG and render decoded frames through Allwinner libuapi display.
+        Keep this disabled until the R528 BSP provides a real VE decoder
+        device.
+
+config RIVOTEK_WIFI_DISPLAY_R528_V4L2_DEV
+    string "R528 V4L2 M2M decoder device"
+    depends on RIVOTEK_WIFI_DISPLAY_R528_V4L2_MJPEG
+    default "/dev/video0"
+
+config RIVOTEK_WIFI_DISPLAY_R528_CEDARC_MJPEG
+    bool "Enable R528 CedarC H264/MJPEG decode/render"
+    select LIBUAPI
+    default n
+    help
+        Decode APP UDP frames through Allwinner CedarC libcedarc, then render
+        decoded YUV frames through libuapi videoOutPort on screen 0. The R528
+        debug path currently advertises H264 because the existing libcedarc
+        library does not provide a usable MJPEG plugin; the MJPEG path is kept
+        in code for a future MJPEG-capable CedarC library.
+
+endif
+
+endif

@@ -1,0 +1,16 @@
+#
+# Rivotek service modules.
+#
+
+rsource "audio_service/Kconfig"
+rsource "audioservice/Kconfig"
+rsource "connectivity_service/Kconfig"
+rsource "display_service/Kconfig"
+rsource "input_service/Kconfig"
+rsource "map_service/Kconfig"
+rsource "provisioning_service/Kconfig"
+rsource "qrcode_service/Kconfig"
+rsource "time_service/Kconfig"
+rsource "weather_service/Kconfig"
+rsource "wifi_display_service/Kconfig"
+rsource "ai_agent/Kconfig"

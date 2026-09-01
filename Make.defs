@@ -1,0 +1,27 @@
+############################################################################
+# vendor/allwinnertech/Make.defs
+#
+# Top-level Make.defs for Allwinnertech vendor.
+# This file is included by the NuttX apps build system to register
+# Allwinnertech applications.
+############################################################################
+
+# Base paths
+AW_VENDOR_DIR := $(APPDIR)/../contest2026_046_FirmNova
+AW_CHIP_DIR   := $(AW_VENDOR_DIR)/chips/r528
+AW_BOARD_CUSTOM_DIR := $(patsubst "%",%,$(CONFIG_ARCH_BOARD_CUSTOM_DIR))
+
+# Only include if this vendor matches the board config
+ifneq ($(filter ../contest2026_046_FirmNova/%,$(AW_BOARD_CUSTOM_DIR)),)
+
+# HAL test applications (optional)
+include $(wildcard $(AW_CHIP_DIR)/drivers/rtos-hal/hal/test/Make.defs)
+
+# Component applications
+include $(wildcard $(AW_CHIP_DIR)/components/Make.defs)
+
+# Vendor applications
+include $(AW_VENDOR_DIR)/apps/Make.defs
+include $(AW_VENDOR_DIR)/rivotek/Make.defs
+
+endif # Allwinnertech/FirmNova board check

@@ -1,0 +1,6 @@
+config RIVOTEK_QRCODE_SERVICE
+    bool "Rivotek QR Code Service"
+    default y
+    help
+        Enable the shared QR code overlay service. The service provides
+        a common API for WiFi provisioning, AI binding and other QR payloads.

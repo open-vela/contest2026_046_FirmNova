@@ -1,0 +1,26 @@
+{
+  "device": {
+    "device_id": "dev_001",
+    "name": "EcaClient",
+    "claim_token": "eca-dev-001-claim"
+  },
+  "mqtt": {
+    "enabled": true,
+    "host": "36.152.151.106",
+    "port": 8101,
+    "client_id": "",
+    "username": "",
+    "password": "",
+    "command_topic_template": "eca/devices/{device_id}/commands",
+    "keepalive_seconds": 60
+  },
+  "http": {
+    "enabled": true,
+    "base_url": "http://36.152.151.106:8100",
+    "token": ""
+  },
+  "intervals": {
+    "heartbeat_seconds": 30,
+    "telemetry_seconds": 10
+  }
+}

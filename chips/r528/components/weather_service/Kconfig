@@ -1,0 +1,10 @@
+config COMPONENTS_WEATHER
+	bool "Weather component"
+	depends on NET
+	depends on NETUTILS_CJSON
+	depends on CRYPTO_MBEDTLS
+	select MBEDTLS_NET_C
+	select MBEDTLS_SSL_SERVER_NAME_INDICATION
+	default n
+	help
+		Enable a simple HTTPS weather client based on Open-Meteo.

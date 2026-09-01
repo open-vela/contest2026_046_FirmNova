@@ -1,0 +1,7 @@
+############################################################################
+# vendor/allwinnertech/rivotek/apps/EcaClient/Make.defs
+############################################################################
+
+ifneq ($(CONFIG_ECA_CLIENT_APP),)
+CONFIGURED_APPS += $(APPDIR)/../contest2026_046_FirmNova/rivotek/apps/EcaClient
+endif

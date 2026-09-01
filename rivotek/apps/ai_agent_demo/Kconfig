@@ -1,0 +1,24 @@
+config AI_AGENT_DEMO_APP
+	bool "AI Agent demo thin app (regression test)"
+	default n
+	select RIVOTEK_AI_AGENT_LIB
+	depends on NET_TCP && NETUTILS_CJSON
+	---help---
+		Minimal thin app that calls ai_agent_run() with a default
+		profile.  Used to verify the library builds and boots.
+
+if AI_AGENT_DEMO_APP
+
+config AI_AGENT_DEMO_PROGNAME
+	string "Program name"
+	default "ai_agent"
+
+config AI_AGENT_DEMO_PRIORITY
+	int "Priority"
+	default 100
+
+config AI_AGENT_DEMO_STACKSIZE
+	int "Stack size"
+	default 32768
+
+endif

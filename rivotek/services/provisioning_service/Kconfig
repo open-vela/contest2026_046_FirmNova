@@ -1,0 +1,23 @@
+config RIVOTEK_PROVISIONING_SERVICE
+    bool "Rivotek Provisioning Service"
+    depends on NET && WIRELESS_WAPI
+    select NETUTILS_NETLIB
+    select NETUTILS_DHCPC
+    select NETUTILS_DHCPD
+    default n
+    help
+        Rivotek network provisioning service. The first implementation
+        starts a temporary vehicle SoftAP for first-connect WiFi provisioning.
+        Bluetooth provisioning will share the same protocol layer later.
+
+if RIVOTEK_PROVISIONING_SERVICE
+
+config RIVOTEK_PROVISIONING_SERVICE_PRIORITY
+    int "provisioning command priority"
+    default 100
+
+config RIVOTEK_PROVISIONING_SERVICE_STACKSIZE
+    int "provisioning command stack size"
+    default 8192
+
+endif

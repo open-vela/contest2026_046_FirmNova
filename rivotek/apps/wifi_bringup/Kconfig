@@ -1,0 +1,23 @@
+config RIVOTEK_WIFI_BRINGUP
+	bool "Rivotek delayed WiFi bringup command"
+	default n
+	depends on IEEE80211_REALTEK_WIFI
+	---help---
+		Enable the wifi_bringup command used by board startup scripts to
+		initialize the Realtek WLAN device after the main boot flow.
+
+if RIVOTEK_WIFI_BRINGUP
+
+config RIVOTEK_WIFI_BRINGUP_PROGNAME
+	string "Program name"
+	default "wifi_bringup"
+
+config RIVOTEK_WIFI_BRINGUP_PRIORITY
+	int "Task priority"
+	default 100
+
+config RIVOTEK_WIFI_BRINGUP_STACKSIZE
+	int "Stack size"
+	default 8192
+
+endif

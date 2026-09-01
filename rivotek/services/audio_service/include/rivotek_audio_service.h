@@ -1,0 +1,6 @@
+#ifndef __VENDOR_ALLWINNERTECH_RIVOTEK_SERVICES_AUDIO_SERVICE_H
+#define __VENDOR_ALLWINNERTECH_RIVOTEK_SERVICES_AUDIO_SERVICE_H
+
+int rivotek_audio_service_set_volume(int volume);
+
+#endif

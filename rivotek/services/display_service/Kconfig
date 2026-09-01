@@ -1,0 +1,11 @@
+config RIVOTEK_COMPONENT_DISPLAY
+	bool
+	default n
+	help
+		Internal symbol for Rivotek display component.
+		It is selected by apps and should not be toggled directly.
+
+config RIVOTEK_SERVICE_DISPLAY
+	bool
+	default n
+	select RIVOTEK_COMPONENT_DISPLAY

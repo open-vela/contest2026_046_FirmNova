@@ -1,0 +1,17 @@
+Import('AIC_ROOT')
+from building import *
+import os
+
+cwd = GetCurrentDir()
+inc = [
+    os.path.join(cwd, 'include'),
+    os.path.join(AIC_ROOT, 'packages', 'rivotek', 'services', 'wifi_display_service', 'include'),
+    os.path.join(AIC_ROOT, 'packages', 'rivotek', 'include'),
+]
+src = Glob('src/*.c')
+
+group = DefineGroup('map-service', src,
+                    depend=['RIVOTEK_MAP_SERVICE'],
+                    CPPPATH=inc)
+
+Return('group')

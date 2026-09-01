@@ -1,0 +1,11 @@
+#
+# Rivotek application configuration.
+#
+
+menu "Rivotek Apps"
+menu "Rivotek Services"
+rsource "services/Kconfig"
+endmenu # Rivotek Services
+
+rsource "apps/Kconfig"
+endmenu # Rivotek Apps

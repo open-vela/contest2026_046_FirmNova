@@ -1,0 +1,52 @@
+#
+# Copyright (C) 2026 Xiaomi Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+menuconfig AUDIOSERVICE
+	bool "audio focus service"
+	default n
+	---help---
+		Enable the audioservice audio focus manager.
+
+if AUDIOSERVICE
+
+config AUDIOSERVICE_PROGNAME
+	string "Program name"
+	default "audioservice"
+
+config AUDIOSERVICE_PRIORITY
+	int "audioservice task priority"
+	default 100
+
+config AUDIOSERVICE_STACKSIZE
+	int "audioservice stack size"
+	default DEFAULT_TASK_STACKSIZE
+
+config AUDIOSERVICE_MONITOR_INTERVAL_MS
+	int "focus owner monitor interval (ms)"
+	default 100
+	range 20 5000
+	---help---
+		Periodically checks whether the current focus owner task is still alive.
+
+config AUDIOSERVICE_WORKER_PRIORITY
+	int "callback worker priority"
+	default 110
+
+config AUDIOSERVICE_WORKER_STACKSIZE
+	int "callback worker stack size"
+	default 2048
+
+endif

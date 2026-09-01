@@ -1,0 +1,92 @@
+############################################################################
+# vendor/allwinnertech/apps/tflite-micro/Kconfig
+#
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.  The
+# ASF licenses this file to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance with the
+# License.  You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+############################################################################
+
+config VELA_TFLITEMICRO
+	bool "Vela TFLiteMicro"
+	default n
+	depends on SYSTEM_FLATBUFFERS && MATH_GEMMLOWP && MATH_KISSFFT && MATH_RUY
+
+if VELA_TFLITEMICRO
+	config VELA_TFLITEMICRO_DEBUG
+	bool "Print tflite-micro's debug message"
+	default n
+
+	config VELA_XTENSA_HIFI
+	bool "Enable Xtensa HiFi DSP optimized kernels"
+	default n
+	---help---
+		Enable Xtensa HiFi DSP optimized TFLM kernel implementations.
+		This will use hardware-accelerated operators from
+		tensorflow/lite/micro/kernels/xtensa/ directory.
+
+	config VELA_TFLITEMICRO_TOOL
+	bool "tflite-micro cmdline tool (vela_tflm)"
+	default n
+
+if VELA_TFLITEMICRO_TOOL
+	config VELA_TFLITEMICRO_TOOL_PRIORITY
+	int "tflite-micro tool priority"
+	default 100
+
+	config VELA_TFLITEMICRO_TOOL_STACKSIZE
+	int "tflite-micro tool stacksize"
+	default 4096
+
+endif
+
+	config VELA_TFLITEMICRO_SPEECH_TEST
+	bool "Simple Speech Model Test Application (vela_speech_test)"
+	default n
+	---help---
+		Enable a simple test application for micro_speech model.
+		This test loads the model and runs inference with zero input.
+
+if VELA_TFLITEMICRO_SPEECH_TEST
+	config VELA_TFLITEMICRO_SPEECH_TEST_PRIORITY
+	int "speech_test priority"
+	default 100
+
+	config VELA_TFLITEMICRO_SPEECH_TEST_STACKSIZE
+	int "speech_test stacksize"
+	default 16384
+
+endif
+
+	config VELA_TFLITEMICRO_SPEECH_RECOGNITION
+	bool "Real-time Speech Recognition Application (vela_speech_recog)"
+	default n
+	---help---
+		Enable real-time speech recognition with audio input.
+		This application uses /dev/audio/pcm0c for audio capture,
+		processes audio with audio_preprocessor_int8.tflite,
+		and recognizes keywords (yes/no/silence/unknown) with
+		micro_speech_quantized.tflite. LED feedback is included.
+
+if VELA_TFLITEMICRO_SPEECH_RECOGNITION
+	config VELA_TFLITEMICRO_SPEECH_RECOGNITION_PRIORITY
+	int "speech_recog priority"
+	default 100
+
+	config VELA_TFLITEMICRO_SPEECH_RECOGNITION_STACKSIZE
+	int "speech_recog stacksize"
+	default 32768
+
+endif
+endif

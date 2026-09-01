@@ -1,0 +1,19 @@
+#
+# Rivotek applications.
+#
+
+rsource "scooterdemo/Kconfig"
+rsource "tflite-micro/Kconfig"
+rsource "audio_test/Kconfig"
+rsource "bt_instance/Kconfig"
+rsource "factory_test/Kconfig"
+rsource "EcaClient/Kconfig"
+rsource "led_rgb/Kconfig"
+rsource "ltr553/Kconfig"
+rsource "luncher_mini/Kconfig"
+rsource "shtc3/Kconfig"
+rsource "sunxi_ir_tx/Kconfig"
+rsource "t070s140b_touch_test/Kconfig"
+rsource "wifi_bringup/Kconfig"
+rsource "wifi_test/Kconfig"
+rsource "ai_agent_demo/Kconfig"
