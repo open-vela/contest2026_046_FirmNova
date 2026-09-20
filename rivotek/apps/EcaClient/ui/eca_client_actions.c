@@ -15,6 +15,22 @@ enum voice_ui_state_e {
 };
 
 static enum voice_ui_state_e g_voice_ui_state;
+static bool g_voice_release_pending;
+
+static void voice_stop_after_start(eca_client_model_t *model)
+{
+    if (eca_client_ai_agent_voice_stop() < 0) {
+        g_voice_ui_state = VOICE_UI_IDLE;
+        g_voice_release_pending = false;
+        lv_subject_copy_string(&model->voice_title, "语音停止失败");
+        return;
+    }
+
+    g_voice_ui_state = VOICE_UI_STOPPING;
+    g_voice_release_pending = false;
+    lv_subject_copy_string(&model->voice_title, "识别中...");
+    ECA_LOGI("voice recording acknowledged: stop requested");
+}
 
 static void voice_status_timer_cb(lv_timer_t *timer)
 {
@@ -26,12 +42,22 @@ static void voice_status_timer_cb(lv_timer_t *timer)
         return;
     }
 
-    if (strcmp(status, "error") == 0) {
+    if (strcmp(status, "no_speech") == 0) {
         g_voice_ui_state = VOICE_UI_IDLE;
+        g_voice_release_pending = false;
+        lv_subject_copy_string(&model->voice_title,
+                               "没有听清，请再说一次");
+    } else if (strcmp(status, "error") == 0) {
+        g_voice_ui_state = VOICE_UI_IDLE;
+        g_voice_release_pending = false;
         lv_subject_copy_string(&model->voice_title, "语音启动失败");
     } else if (g_voice_ui_state == VOICE_UI_STARTING &&
                strcmp(status, "recording") == 0) {
-        lv_subject_copy_string(&model->voice_title, "松开结束");
+        if (g_voice_release_pending) {
+            voice_stop_after_start(model);
+        } else {
+            lv_subject_copy_string(&model->voice_title, "松开结束");
+        }
     } else if (g_voice_ui_state == VOICE_UI_STOPPING &&
                strcmp(status, "processing") == 0) {
         lv_subject_copy_string(&model->voice_title, "识别中...");
@@ -55,19 +81,14 @@ static void voice_card_event_cb(lv_event_t *event)
         }
 
         g_voice_ui_state = VOICE_UI_STARTING;
+        g_voice_release_pending = false;
         lv_subject_copy_string(&model->voice_title, "正在聆听...");
         ECA_LOGI("voice card pressed: start requested");
     } else if ((code == LV_EVENT_RELEASED || code == LV_EVENT_PRESS_LOST) &&
                g_voice_ui_state == VOICE_UI_STARTING) {
-        if (eca_client_ai_agent_voice_stop() < 0) {
-            g_voice_ui_state = VOICE_UI_IDLE;
-            lv_subject_copy_string(&model->voice_title, "语音停止失败");
-            return;
-        }
-
-        g_voice_ui_state = VOICE_UI_STOPPING;
-        lv_subject_copy_string(&model->voice_title, "识别中...");
-        ECA_LOGI("voice card released: stop requested");
+        g_voice_release_pending = true;
+        lv_subject_copy_string(&model->voice_title, "正在结束...");
+        ECA_LOGI("voice card released: waiting for recording status");
     }
 }
 
