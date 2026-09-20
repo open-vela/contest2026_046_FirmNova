@@ -391,7 +391,8 @@
 
 /* Default TTS speaker and cluster */
 #define AGENT_VOICE_LEGACY_SPEAKER "zh_male_beijingxiaoye_emo_v2_mars_bigtts"
-#define AGENT_VOICE_DEFAULT_SPEAKER "zh_female_wanwanxiaohe_moon_bigtts"
+#define AGENT_VOICE_PREVIOUS_DEFAULT_SPEAKER "zh_female_wanwanxiaohe_moon_bigtts"
+#define AGENT_VOICE_DEFAULT_SPEAKER "zh_female_qinqienvsheng_moon_bigtts"
 #define AGENT_VOICE_DEFAULT_CLUSTER "volcano_tts"
 #define AGENT_VOICE_DEFAULT_ASR_CLUSTER "volcengine_streaming_common"
 

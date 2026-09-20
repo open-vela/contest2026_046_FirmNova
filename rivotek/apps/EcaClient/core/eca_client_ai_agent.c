@@ -19,7 +19,7 @@ static pthread_mutex_t g_ai_agent_request_lock = PTHREAD_MUTEX_INITIALIZER;
 
 static int eca_client_ai_agent_write_request(const char *path,
                                              const char *value,
-                                             bool replace)
+                                             int replace)
 {
     char temp_path[64];
     FILE *fp;
@@ -82,7 +82,7 @@ int eca_client_ai_agent_speak(const char *text, void *arg)
 
     (void)arg;
     ret = eca_client_ai_agent_write_request(ECA_CLIENT_TTS_REQUEST_PATH, text,
-                                            false);
+                                            0);
     if (ret < 0) {
         ECA_LOGW("TTS request write failed ret=%d", ret);
         return ret;
@@ -95,7 +95,7 @@ int eca_client_ai_agent_speak(const char *text, void *arg)
 int eca_client_ai_agent_speak_priority(const char *text)
 {
     return eca_client_ai_agent_write_request(ECA_CLIENT_TTS_REQUEST_PATH, text,
-                                             true);
+                                             1);
 }
 
 static int eca_client_ai_agent_read_status(const char *path, char *status,
@@ -139,14 +139,34 @@ int eca_client_ai_agent_is_idle(void)
 
 int eca_client_ai_agent_voice_start(void)
 {
-    return eca_client_ai_agent_write_request(
-        ECA_CLIENT_VOICE_REQUEST_PATH, "start", false);
+    int ret;
+
+    eca_client_ai_agent_write_request(ECA_CLIENT_VOICE_STATUS_PATH,
+                                      "starting", 1);
+    ret = eca_client_ai_agent_write_request(
+        ECA_CLIENT_VOICE_REQUEST_PATH, "start", 0);
+    if (ret < 0) {
+        eca_client_ai_agent_write_request(ECA_CLIENT_VOICE_STATUS_PATH,
+                                          "error", 1);
+    }
+
+    return ret;
 }
 
 int eca_client_ai_agent_voice_stop(void)
 {
-    return eca_client_ai_agent_write_request(
-        ECA_CLIENT_VOICE_REQUEST_PATH, "stop", true);
+    int ret;
+
+    eca_client_ai_agent_write_request(ECA_CLIENT_VOICE_STATUS_PATH,
+                                      "processing", 1);
+    ret = eca_client_ai_agent_write_request(
+        ECA_CLIENT_VOICE_REQUEST_PATH, "stop", 1);
+    if (ret < 0) {
+        eca_client_ai_agent_write_request(ECA_CLIENT_VOICE_STATUS_PATH,
+                                          "error", 1);
+    }
+
+    return ret;
 }
 
 int eca_client_ai_agent_voice_status(char *status, size_t status_size)
