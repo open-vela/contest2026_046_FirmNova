@@ -6,8 +6,8 @@
   },
   "mqtt": {
     "enabled": true,
-    "host": "36.152.151.106",
-    "port": 8101,
+    "host": "101.37.101.206",
+    "port": 1883,
     "client_id": "",
     "username": "",
     "password": "",
@@ -16,7 +16,7 @@
   },
   "http": {
     "enabled": true,
-    "base_url": "http://36.152.151.106:8100",
+    "base_url": "http://101.37.101.206:18083",
     "token": ""
   },
   "intervals": {
