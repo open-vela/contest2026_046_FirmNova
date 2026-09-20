@@ -359,6 +359,8 @@ static void eca_client_registration_apply_completed(void)
     if (!completion_handled) {
         ECA_LOGI("registration completed");
     }
+    /* Auto-start ai_agent after registration (runs on first boot + reboot) */
+    system("ai_agent &");
 }
 #endif
 
