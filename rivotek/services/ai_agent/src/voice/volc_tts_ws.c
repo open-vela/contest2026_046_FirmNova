@@ -733,7 +733,8 @@ static void tts_ws_init(void)
             sizeof(s_speaker))
             != OK
         || s_speaker[0] == '\0'
-        || strcmp(s_speaker, AGENT_VOICE_LEGACY_SPEAKER) == 0) {
+        || strcmp(s_speaker, AGENT_VOICE_LEGACY_SPEAKER) == 0
+        || strcmp(s_speaker, AGENT_VOICE_PREVIOUS_DEFAULT_SPEAKER) == 0) {
         strncpy(s_speaker, AGENT_VOICE_DEFAULT_SPEAKER, sizeof(s_speaker) - 1);
         claw_config_set(AGENT_CFG_KEY_VOLC_SPEAKER, s_speaker);
     }
