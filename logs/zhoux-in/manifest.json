@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "team_id": "contest2026_046_FirmNova",
+  "github_login": "zhoux-in",
+  "generator": "codex-collector@1.2.0",
+  "updated_at": "2026-09-20T06:23:18.362Z",
+  "sessions": [
+    {
+      "session_id": "2026-07-27T16-38-50-019fa2ba-1023-7fa2-ae13-557604122fcc",
+      "tool": "codex",
+      "started_at": "2026-07-27T08:39:16.396Z",
+      "last_event_at": "2026-07-27T09:21:05.246Z",
+      "event_count": 7,
+      "raw_event_count": 21,
+      "file_path": "logs/zhoux-in/2026-07-27/codex__2026-07-27T16-38-50-019fa2ba-1023-7fa2-ae13-557604122fcc.jsonl",
+      "collection_mode": "cli",
+      "health": "ok"
+    },
+    {
+      "session_id": "2026-09-17T16-28-25-01a0ae7b-365e-74e1-88db-570b08df9da9",
+      "tool": "codex",
+      "started_at": "2026-09-17T08:28:25.815Z",
+      "last_event_at": "2026-09-20T06:23:18.361Z",
+      "event_count": 5,
+      "raw_event_count": 8,
+      "file_path": "logs/zhoux-in/2026-09-20/codex__2026-09-17T16-28-25-01a0ae7b-365e-74e1-88db-570b08df9da9.jsonl",
+      "collection_mode": "cli",
+      "health": "ok"
+    }
+  ]
+}
