@@ -164,7 +164,9 @@ static void *voice_request_poll_task(void *arg)
                         s_voice_dialog_deadline = time(NULL) +
                                                   VOICE_DIALOG_TIMEOUT_SEC;
                     } else {
-                        voice_request_write_status("error");
+                        s_voice_dialog_pending = false;
+                        voice_request_write_status(
+                            ret == -ENODATA ? "no_speech" : "error");
                     }
                 }
 
